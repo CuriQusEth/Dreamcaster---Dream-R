@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dream-bg: #0D0B14;
+  --color-dream-primary: #8b5cf6;
+  --color-dream-secondary: #ec4899;
+  --color-dream-accent: #2dd4bf;
+  --color-plant-neon: #a7f3d0;
+}
+
+body {
+  background-color: var(--color-dream-bg);
+  color: #f1f5f9;
+  overflow: hidden; /* Prevent scrolling for the game canvas */
+  touch-action: none; /* Prevent pinch zoom on mobile to favor game drag/drop */
+}
+
+.dream-gradient-text {
+  background: linear-gradient(to right, #a5b4fc, #2dd4bf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel-heavy {
+  background: rgba(26, 28, 44, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glow-shadow {
+  box-shadow: 0 0 15px rgba(45, 212, 191, 0.5);
+}
