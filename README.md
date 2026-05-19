@@ -1,32 +1,53 @@
 # Dreamseed Gardener & DreamCaster Orchestrator
 
-Welcome to **Dreamseed Gardener**, a peaceful, magical gardening simulation game built for the modern web on Base. Within this serene ecosystem, you can nurture your own living dream garden, planting magical Dreamseeds that grow into fantastical plants, shaping beautiful dreamscapes.
+Welcome to **Dreamseed Gardener**, a peaceful, magical gardening simulation game powered by the **DreamCaster Orchestrator**, an ERC-8004 compliant intelligent AI Agent.
 
-## Features
+## Platform Overview
 
-- **Magical Gardening**: Drag and drop Dreamseeds into the soil.
-- **Rich Interaction**: Water, nourish, and interact with your plants as they grow over time with canvas-rendered particle effects.
-- **Web3 Integration**: Integrated with the Base ecosystem (Mainnet). Features include SIWE (Sign-In with Ethereum) capabilities, letting you assert ownership of your breathtaking gardens safely and securely on-chain.
-- **ERC-8004 AI Agent Integration**: We introduce the **DreamCaster Orchestrator**, a fully integrated ERC-8004 intelligent agent that manages dream-casting, content generation, and multi-task automation.
+The project provides a unified web experience combining:
+1. **Dreamseed Gardener UI**: A mobile-first, canvas-rendered frontend for nurturing your dreamscape ecosystem.
+2. **DreamCaster Orchestrator API**: An intelligent agent managing dream-casting, content generation, multi-task automation, and creative operations.
 
-## Project Architecture
+## Technical Stack
 
-- **Frontend**: Built with React 19, Vite, Tailwind CSS, and Framer Motion. 
-- **Blockchain**: Integrates `wagmi` and `viem` for trustless interaction. Also supports ERC-8021 tracking.
-- **Server**: Express.js is utilized to serve the app and provide the AI automation endpoints:
-  - `GET /api/agent`: Agent control API.
-  - `GET/POST /api/mcp`: Active Model Context Protocol command execution endpoint.
-  - `/.well-known/agent-card.json`: The public identity file for the Orchestrator AI.
+- **Framework**: Next.js 14+ (App Router) features alongside React & Vite
+- **Styling**: Tailwind CSS & Framer Motion
+- **Web3 Ecosystem**: Wagmi, Viem, and Base Smart Contracts (Mainnet `eip155:8453`)
+- **Agent Standard**: ERC-8004 Trustless Agents (`registration-v1`)
 
-## Getting Started
+## Agent Identity
+
+- **Name**: DreamCaster Orchestrator
+- **Status**: Online / Active
+- **Version**: 1.0.0
+- **Supported Chains**: Base (`eip155:8453`)
+- **Capabilities**: `dream-casting`, `content-generation`, `creative-orchestration`, `multi-task-automation`, `daily-operations`, `mcp-command-execution`
+
+### Core Service Endpoints
+
+- **Agent Identity Card**: `/.well-known/agent-card.json` (A2A capabilities)
+- **Agent Control API**: `/api/agent` (Main agent info endpoint)
+- **MCP Server Endpoint**: `/api/mcp` (Model Context Protocol)
+
+## Model Context Protocol (MCP) Connection Guide
+
+The DreamCaster Orchestrator exposes an MCP server for active command execution. To integrate:
+
+1. **Handshake**: Clients must initially send an `initialize` JSON-RPC request to `/api/mcp`.
+2. **Tool Discovery**: Retrieve the orchestrator's available capabilities by posting a `tools/list` request. Current active capabilities include:
+   - `get_race_status`
+   - `start_race`
+   - `get_leaderboard`
+   - `optimize_speed`
+   - `get_track_info`
+3. **Execution**: Invoke commands via `tools/call`.
+4. **Resources & Prompts**: Additional context can be sourced via `prompts/list` and `resources/list`.
+
+## Running Locally
 
 1. Clone or download the repository.
 2. Run `npm install` to load dependencies.
 3. Start the dev server using `npm run dev`.
-4. Open the displayed localhost URL to start shaping your dreamscapes!
+4. Access the frontend locally dynamically assigned by Vite, and the `app/api/*` routes if using Next.js routing structures.
 
-## Deployment
-
-Deploy using `npm run build` and follow up with `npm run start` for production usage, or directly host it on platforms like Vercel with your configuration.
-
-All interactions are securely tracked on Base network to give a beautiful, persistent legacy to your dream gardens. Happy gardening!
+*(Note: Configuration APIs, wallets, and credentials are intentionally excluded from this documentation and source control to ensure public repo safety.)*
