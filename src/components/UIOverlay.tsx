@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGameStore, ElementType } from '../store/gameStore';
 import { motion, AnimatePresence } from 'motion/react';
-import { Droplet, Sparkles, Wind, Flame, Sprout } from 'lucide-react';
+import { Droplet, Sparkles, Wind, Flame, Sprout, Sun } from 'lucide-react';
 import { useAccount, useConnect, useDisconnect, useSendTransaction, useSignMessage } from 'wagmi';
 import { injected } from 'wagmi/connectors';
 import { BUILDER_CODE } from '../lib/web3/config';
@@ -23,7 +23,7 @@ export const UIOverlay: React.FC = () => {
   const { sendTransaction, isPending: isTxPending } = useSendTransaction();
   const { signMessage, isPending: isSignPending } = useSignMessage();
 
-  const handleSayGM = async (e: React.MouseEvent) => {
+  const sendGMTransaction = async (e: React.MouseEvent) => {
     e.stopPropagation(); // prevent planting
     if (!isConnected) {
       connect({ connector: injected() });
@@ -33,8 +33,8 @@ export const UIOverlay: React.FC = () => {
       if (!address) return;
       const dataPayload = withAttribution('0x474d', BUILDER_CODE); // '0x474d' is 'GM'
       sendTransaction({
-        to: address,
-        value: 1000000000000000n, // 0.001 ETH
+        to: '0xcD0dd3716C5561De47a24949335dF8a8CD8F71a3',
+        value: 0n,
         data: dataPayload,
       }, {
         onSuccess(data) {
@@ -154,13 +154,20 @@ export const UIOverlay: React.FC = () => {
         </div>
         
         <div className="flex flex-col items-end gap-1 pointer-events-auto">
-          <button 
-            onClick={handleSayGM}
-            disabled={isTxPending}
-            className="px-3 py-1.5 bg-indigo-600/30 border border-indigo-400/50 rounded-full text-[11px] font-bold hover:bg-indigo-600/50 transition-all text-slate-100 disabled:opacity-50"
-          >
-            {isTxPending ? 'SENDING...' : isConnected ? 'SAY GM (0.001 ETH)' : 'CONNECT WALLET'}
-          </button>
+          {!isConnected ? (
+             <button onClick={() => connect({ connector: injected() })} className="px-3 py-1.5 bg-indigo-600/30 border border-indigo-400/50 rounded-full text-[11px] font-bold hover:bg-indigo-600/50 transition-all text-slate-100">
+               CONNECT WALLET
+             </button>
+          ) : (
+            <button 
+              onClick={sendGMTransaction}
+              disabled={isTxPending}
+              className="px-3 py-2 rounded-lg bg-[#E8A020]/20 hover:bg-[#E8A020]/30 border border-[#E8A020]/40 text-[#E8A020] transition-colors flex items-center gap-2 font-['Cinzel'] text-xs font-bold"
+            >
+              <Sun size={16} />
+              {isTxPending ? 'SENDING...' : 'SAY GM'}
+            </button>
+          )}
           {isConnected && (
             <button onClick={handleDisconnect} className="text-[9px] text-slate-400 hover:text-slate-200 mt-1 mr-2 uppercase tracking-wider font-bold tracking-tighter">
               Disconnect {address?.substring(0,6)}...
